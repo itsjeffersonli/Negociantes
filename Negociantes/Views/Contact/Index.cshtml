@@ -1,0 +1,42 @@
+﻿@model Negociantes.Models.Contact
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p style="font-size: 4rem">Contact Us</p>
+
+<p style="font-size: 2rem">
+    For concerns, you may use the form below to get in touch with us.
+    Kindly make sure to fill up the survey and provide us with your feedback/concerns
+    we will respond via email within 7 business days. 
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea asp-for="Text" class="form-control"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<p>
+    <br /><br />
+    For more information, inquiries or complaints, you may contact the following<br />
+
+    Negociantes Customer Care | 1234-5678 | customercare.negociantes@gmail.com<br />
+
+    Negociantes Facebook - https://www/facebook.com/Negociantes/
+</p>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

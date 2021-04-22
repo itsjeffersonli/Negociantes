@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Negociantes.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .hide {
+        display: none;
+    }
+
+    .myDIV:hover + .hide {
+        display: block;
+        color: red;
+    }
+</style>
+<h1 class="text-center">Negociantes Forums</h1>
+<a asp-action="Create"><h2 style="color: #2C5F2D; background-color: #97BC62FF" class="btn btn-default">Create a Post!</h2></a>
+<table class="table text-center">
+    <tbody>
+        @foreach (var item in Model.Reverse())
+        {
+            <tr>
+                <td>
+                    <div>
+                        <img src="~/img/Avatars/@Url.Content(item.ImagePath2)" style="width: 50px; height: 50px; border-radius: 50%; float: left;" />
+
+                        <span style="float: right;">@item.DateTime</span>
+
+                        <div class="myDIV">
+                            <span style="font-size: 2em; color:lawngreen; font-weight: 500; float: left; cursor: pointer;">@item.Name</span>
+                        </div>
+
+                        <div class="hide" style="color: white;">
+                            <div style="clear: both;">Name: @item.NameFull</div>
+                            <div style="clear: both;">City: @item.City<br /></div>
+                            <div style="clear: both;">Messenger Link: @item.Messenger</div>
+                        </div>
+                        <div style="clear: both;" />
+
+                        <br /><br />
+                        <p style="font-size: 1.5em;">@Html.DisplayFor(modelItem => item.Text)</p>
+
+                        <br />
+                        @if (item.ImagePath != null)
+                        {
+
+
+                            <!-- NOTE: THIS MODAL HTML, CSS, AND JAVASCRIPT CODE CAME FROM W3SCHOOLS,
+        VISIT THEM AT https://www.w3schools.com/howto/howto_css_modal_images.asp -->
+                            <img src="~/img/products/@Url.Content(item.ImagePath)" class="myImages" id="myImg" style="width: 100%; max-width: 300px" />
+                            <div id="myModal" class="modal">
+                                <!-- The Close Button -->
+                                <span class="close">&times;</span>
+                                <!-- Modal Content (The Image) -->
+                                <img class="modal-content" id="img01">
+                                <!-- Modal Caption (Image Text) -->
+                                <div id="caption"></div>
+                            </div>
+                        }
+                        <br />
+                        @foreach (var reply in item.Replies)
+                        {
+                            <br />
+                            <div style="border: solid white 1px; border-radius: 3px; padding: 10px 10px;">
+                                <div class="myDIV">
+                                    <span style="font-size: 1em; color:dodgerblue; text-decoration:solid;">@reply.Name</span>
+                                </div>
+                                <div class="hide" style="color: white;">
+                                    Name: @reply.NameFull
+                                    <br />City: @reply.City
+                                    <br />Messenger Link: @reply.Messenger
+                                </div>
+                                <span>
+                                    <br />
+                                    @reply.Text
+                                </span>
+                            </div>
+                        }
+                        <br />
+                        @using (Html.BeginForm("PostReply", "Post", FormMethod.Post))
+                        {
+                            <input type="text" name="reply" style="width: 35%; height: 4em; background-color: white;" />
+                            <br /><br />
+                            <input type="hidden" name="FID" value="@item.PostId" />
+                            <input type="submit" value="Post Reply" style="color: #2C5F2D; background-color: #97BC62FF" class="btn btn-default" />
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
